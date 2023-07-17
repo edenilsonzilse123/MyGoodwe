@@ -1,0 +1,45 @@
+unit uDados;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, ZAbstractConnection, ZConnection, Data.DB,
+  ZAbstractRODataset, ZAbstractDataset, ZDataset;
+
+type
+  TDados = class(TDataModule)
+    conDados: TZConnection;
+    procedure SqlInsereDados(pTabela,pCampos,pValores:String);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Dados: TDados;
+
+implementation
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+
+{$R *.dfm}
+
+procedure TDados.SqlInsereDados(pTabela, pCampos, pValores: String);
+var
+  zqLista:TZQuery;
+begin
+  zqLista :=  TZQuery.Create(nil);
+  with zqLista do
+  begin
+    Connection  :=  Dados.conDados;
+    if Active then
+      Close;
+    SQL.Clear;
+    SQL.Add('SELECT * FROM PLANTAS');
+    ExecSQL;
+  end;
+  FreeAndNil(zqLista);
+end;
+
+end.

@@ -1,0 +1,38 @@
+object frmPlantas: TfrmPlantas
+  Left = 0
+  Top = 0
+  Width = 376
+  Height = 54
+  TabOrder = 0
+  object grpPlantas: TGroupBox
+    Left = 0
+    Top = 0
+    Width = 376
+    Height = 54
+    Align = alClient
+    Caption = ' Plantas '
+    TabOrder = 0
+    ExplicitLeft = 336
+    ExplicitTop = 40
+    ExplicitWidth = 185
+    ExplicitHeight = 105
+    object lbledtCodPlanta: TLabeledEdit
+      Left = 3
+      Top = 28
+      Width = 65
+      Height = 21
+      EditLabel.Width = 33
+      EditLabel.Height = 13
+      EditLabel.Caption = 'C'#243'digo'
+      TabOrder = 0
+    end
+    object edtNomePlanta: TEdit
+      Left = 71
+      Top = 28
+      Width = 300
+      Height = 21
+      Enabled = False
+      TabOrder = 1
+    end
+  end
+end

@@ -1,0 +1,24 @@
+unit uDadosInversor;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs;
+
+type
+  TfrmDadosInversor = class(TForm)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmDadosInversor: TfrmDadosInversor;
+
+implementation
+
+{$R *.dfm}
+
+end.

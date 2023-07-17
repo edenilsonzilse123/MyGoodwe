@@ -1,0 +1,17 @@
+program Goodwe;
+
+uses
+  Forms,
+  MAIN in 'MAIN.PAS' {MainForm},
+  uNovaPlanta in '..\Units\uNovaPlanta.pas' {frmNovaPlanta},
+  uFormularios in '..\Units\uFormularios.pas',
+  uDados in '..\Units\Dados\uDados.pas' {Dados: TDataModule};
+
+{$R *.RES}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(TMainForm, MainForm);
+  Application.CreateForm(TDados, Dados);
+  Application.Run;
+end.

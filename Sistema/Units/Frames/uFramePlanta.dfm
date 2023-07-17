@@ -1,0 +1,59 @@
+object frmPlantas: TfrmPlantas
+  Left = 0
+  Top = 0
+  Width = 376
+  Height = 54
+  TabOrder = 0
+  object grpPlantas: TGroupBox
+    Left = 0
+    Top = 0
+    Width = 376
+    Height = 54
+    Align = alClient
+    Caption = ' Plantas '
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Courier New'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 0
+    ExplicitLeft = 336
+    ExplicitTop = 40
+    ExplicitWidth = 185
+    ExplicitHeight = 105
+    object lbledtCodPlanta: TLabeledEdit
+      Left = 3
+      Top = 28
+      Width = 65
+      Height = 22
+      EditLabel.Width = 42
+      EditLabel.Height = 14
+      EditLabel.Caption = 'C'#243'digo'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Courier New'
+      Font.Style = []
+      NumbersOnly = True
+      ParentFont = False
+      TabOrder = 0
+      OnExit = lbledtCodPlantaExit
+      OnKeyPress = lbledtCodPlantaKeyPress
+    end
+    object edtNomePlanta: TEdit
+      Left = 71
+      Top = 28
+      Width = 300
+      Height = 22
+      Enabled = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Courier New'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 1
+    end
+  end
+end

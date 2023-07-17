@@ -1,0 +1,15 @@
+program Goodwe;
+
+uses
+  Forms,
+  MAIN in 'MAIN.PAS' {MainForm},
+  uNovaPlanta in '..\Units\uNovaPlanta.pas' {frmNovaPlanta},
+  uFormularios in '..\Units\uFormularios.pas';
+
+{$R *.RES}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(TMainForm, MainForm);
+  Application.Run;
+end.

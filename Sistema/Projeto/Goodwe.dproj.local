@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2023/07/15 22:35:48.000.147,C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Projeto\Goodwe.dproj=C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Projeto\MDIAPP.dproj</Transaction>
+    <Transaction>2023/07/15 22:44:59.000.471,C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Projeto\ChildWin.pas=</Transaction>
+    <Transaction>2023/07/15 22:45:09.000.635,C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Projeto\about.pas=</Transaction>
+    <Transaction>2023/07/15 22:54:18.000.019,=C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Projeto\Unit1.pas</Transaction>
+    <Transaction>2023/07/15 22:54:44.000.085,C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Units\uNovaPlanta.dfm=C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Projeto\Unit1.dfm</Transaction>
+    <Transaction>2023/07/15 22:54:44.000.085,C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Units\uNovaPlanta.pas=C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Projeto\Unit1.pas</Transaction>
+    <Transaction>2023/07/15 23:01:15.000.756,=C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Projeto\Unit1.pas</Transaction>
+    <Transaction>2023/07/15 23:05:20.000.365,C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Units\uFormularios.pas=C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Projeto\Unit1.pas</Transaction>
+    <Transaction>2023/07/15 23:39:46.000.378,=C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Projeto\Unit1.pas</Transaction>
+    <Transaction>2023/07/15 23:41:01.000.341,C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Units\Dados\uDados.dfm=C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Projeto\Unit1.dfm</Transaction>
+    <Transaction>2023/07/15 23:41:01.000.341,C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Units\Dados\uDados.pas=C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Projeto\Unit1.pas</Transaction>
+    <Transaction>2023/07/16 02:12:38.000.701,=C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Projeto\Unit1.pas</Transaction>
+    <Transaction>2023/07/16 02:14:48.000.450,C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Projeto\Unit1.dfm=C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Units\Frames\uFramePlanta.dfm</Transaction>
+    <Transaction>2023/07/16 02:14:48.000.450,C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Projeto\Unit1.pas=C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Units\Frames\uFramePlanta.pas</Transaction>
+    <Transaction>2023/07/16 03:48:44.000.156,=C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Projeto\Unit1.pas</Transaction>
+    <Transaction>2023/07/16 03:49:43.000.735,C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Projeto\Unit1.pas=C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Units\uNovoInversor.pas</Transaction>
+    <Transaction>2023/07/16 03:49:43.000.735,C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Projeto\Unit1.dfm=C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Units\uNovoInversor.dfm</Transaction>
+    <Transaction>2023/07/16 23:21:52.992,=C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Projeto\Unit1.pas</Transaction>
+    <Transaction>2023/07/16 23:23:05.690,C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Units\uDadosInversor.dfm=C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Projeto\Unit1.dfm</Transaction>
+    <Transaction>2023/07/16 23:23:05.690,C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Units\uDadosInversor.pas=C:\Users\edeni\OneDrive\Documentos\GitHub\MyGoodwe\Sistema\Projeto\Unit1.pas</Transaction>
+  </Transactions>
+</BorlandProject>

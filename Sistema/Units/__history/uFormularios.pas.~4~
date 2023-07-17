@@ -1,0 +1,26 @@
+unit uFormularios;
+
+interface
+
+uses
+  Vcl.Forms, Vcl.Dialogs, System.Classes, Datasnap.DBClient;
+
+procedure CriaForm(InstanceClass: TComponentClass; var Reference; pCaption:String);
+procedure CriaDataSet(pDataSet:TClientDataSet);
+
+implementation
+
+procedure CriaForm(InstanceClass: TComponentClass; var Reference; pCaption:String);
+begin
+  Application.CreateForm(InstanceClass,Reference);
+  TForm(Reference).Caption  :=  pCaption;
+  TForm(Reference).Show;
+end;
+
+procedure CriaDataSet(pDataSet:TClientDataSet);
+begin
+  pDataSet.CreateDataSet;
+  pDataSet.Open;
+end;
+
+end.

@@ -1,0 +1,100 @@
+unit uNovaPlanta;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Data.DB, Vcl.Grids,
+  Vcl.DBGrids, Vcl.StdCtrls, Datasnap.DBClient, ZAbstractRODataset,
+  ZAbstractDataset, ZDataset;
+
+type
+  TfrmNovaPlanta = class(TForm)
+    pnlNovaPlanta: TPanel;
+    dbgrdListaNovaPlanta: TDBGrid;
+    lbledtNovaPlanta: TLabeledEdit;
+    cdsListaPlantas: TClientDataSet;
+    cdsListaPlantasId: TIntegerField;
+    cdsListaPlantasNovaPlanta: TStringField;
+    dsListaPlantas: TDataSource;
+    btnAdicionar: TButton;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure CarregarPlantas;
+    procedure FormActivate(Sender: TObject);
+    procedure btnAdicionarClick(Sender: TObject);
+    procedure dbgrdListaNovaPlantaDblClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmNovaPlanta: TfrmNovaPlanta;
+  vNumeroCad:Integer  = 0;
+
+implementation
+
+uses
+  uDados, uFormularios;
+
+{$R *.dfm}
+
+procedure TfrmNovaPlanta.btnAdicionarClick(Sender: TObject);
+begin
+  if (vNumeroCad = 0) then
+    Dados.SqlInsere('PLANTAS','NOME_PLANTA',StringSql(lbledtNovaPlanta.Text))
+  else
+    Dados.SqlAtualiza('PLANTAS',
+                      'NOME_PLANTA = '  + StringSql(lbledtNovaPlanta.Text),
+                      'ID = '           + IntToStr(vNumeroCad));
+  CarregarPlantas;
+end;
+
+procedure TfrmNovaPlanta.CarregarPlantas;
+var
+  zqLista:TZQuery;
+begin
+  zqLista :=  TZQuery.Create(nil);
+  with zqLista do
+  begin
+    Connection  :=  Dados.conDados;
+    if Active then
+      Close;
+    SQL.Clear;
+    SQL.Add('SELECT * FROM PLANTAS');
+    Open;
+    First;
+    FetchAll;
+    cdsListaPlantas.Close;
+    CriaDataSet(cdsListaPlantas);
+    while not Eof do
+    begin
+      cdsListaPlantas.Append;
+      cdsListaPlantasId.AsInteger         :=  FieldByName('ID').AsInteger;
+      cdsListaPlantasNovaPlanta.AsString  :=  FieldByName('NOME_PLANTA').AsString;
+      cdsListaPlantas.Post;
+      Next;
+    end;
+  end;
+  FreeAndNil(zqLista);
+end;
+
+procedure TfrmNovaPlanta.dbgrdListaNovaPlantaDblClick(Sender: TObject);
+begin
+  vNumeroCad            :=  cdsListaPlantasId.AsInteger;
+  lbledtNovaPlanta.Text :=  cdsListaPlantasNovaPlanta.AsString;
+end;
+
+procedure TfrmNovaPlanta.FormActivate(Sender: TObject);
+begin
+  CarregarPlantas;
+end;
+
+procedure TfrmNovaPlanta.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action        :=  TCloseAction.caFree;
+  frmNovaPlanta :=  nil;
+end;
+
+end.

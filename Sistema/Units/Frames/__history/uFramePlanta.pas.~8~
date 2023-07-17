@@ -1,0 +1,33 @@
+
+unit uFramePlanta;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls,
+  Data.DB, ZAbstractRODataset, ZAbstractDataset, ZDataset;
+
+type
+  TfrmPlantas = class(TFrame)
+    lbledtCodPlanta: TLabeledEdit;
+    grpPlantas: TGroupBox;
+    edtNomePlanta: TEdit;
+    zq1: TZQuery;
+    procedure SetCodigo(pCodigo:Integer);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmPlantas.SetCodigo(pCodigo: Integer);
+begin
+  lbledtCodPlanta.Text  :=  IntToStr(pCodigo);
+end;
+
+end.

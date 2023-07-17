@@ -1,0 +1,43 @@
+unit MAIN;
+
+interface
+
+uses Winapi.Windows, System.SysUtils, System.Classes, Vcl.Graphics, Vcl.Forms,
+  Vcl.Controls, Vcl.Menus, Vcl.StdCtrls, Vcl.Dialogs, Vcl.Buttons, Winapi.Messages,
+  Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.StdActns, Vcl.ActnList, Vcl.ToolWin,
+  Vcl.ImgList, System.ImageList, System.Actions;
+
+type
+  TMainForm = class(TForm)
+    MainMenu1: TMainMenu;
+    File1: TMenuItem;
+    FileNewItem: TMenuItem;
+    OpenDialog: TOpenDialog;
+    StatusBar: TStatusBar;
+    ActionList1: TActionList;
+    NovaPlanta: TEditPaste;
+    ToolBar2: TToolBar;
+    ImageList1: TImageList;
+    procedure NovaPlantaExecute(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  MainForm: TMainForm;
+
+implementation
+
+uses
+  uNovaPlanta, uFormularios;
+
+{$R *.dfm}
+
+procedure TMainForm.NovaPlantaExecute(Sender: TObject);
+begin
+  CriaForm(TfrmNovaPlanta,frmNovaPlanta);
+end;
+
+end.
