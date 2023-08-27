@@ -8,7 +8,8 @@ uses
   uDados in '..\Units\Dados\uDados.pas' {Dados: TDataModule},
   uFramePlanta in '..\Units\Frames\uFramePlanta.pas' {frmPlantas: TFrame},
   uNovoInversor in '..\Units\uNovoInversor.pas' {frmInversor},
-  uDadosInversor in '..\Units\uDadosInversor.pas' {frmDadosInversor};
+  uDadosInversor in '..\Units\uDadosInversor.pas' {frmDadosInversor},
+  uFrameInversor in '..\Units\Frames\uFrameInversor.pas' {frmInversorFrame: TFrame};
 
 {$R *.RES}
 

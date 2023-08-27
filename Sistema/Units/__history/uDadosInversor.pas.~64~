@@ -1,0 +1,202 @@
+unit uDadosInversor;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, uFrameInversor, Data.DB,
+  Vcl.Grids, Vcl.DBGrids, Datasnap.DBClient, ZAbstractRODataset,
+  ZAbstractDataset, ZDataset, Vcl.StdCtrls, System.Win.ComObj;
+
+type
+  TfrmDadosInversor = class(TForm)
+    pnlInversor: TPanel;
+    dbgrdListaDadosInversor: TDBGrid;
+    cdsListaDadosInversor: TClientDataSet;
+    dsListaDadosInversor: TDataSource;
+    cdsListaDadosInversorDataHoraLeitura: TDateTimeField;
+    cdsListaDadosInversorModoOperacao: TStringField;
+    cdsListaDadosInversorvmppt1v: TFloatField;
+    cdsListaDadosInversorimppt1a: TFloatField;
+    cdsListaDadosInversorUAV: TFloatField;
+    cdsListaDadosInversoriac1a: TFloatField;
+    cdsListaDadosInversorfac1hz: TFloatField;
+    cdsListaDadosInversorpotencia: TFloatField;
+    cdsListaDadosInversortemperatura: TFloatField;
+    cdsListaDadosInversorproducao_dia: TFloatField;
+    cdsListaDadosInversorgeracao_total: TFloatField;
+    cdsListaDadosInversorh_total: TIntegerField;
+    cdsListaDadosInversorrssi: TIntegerField;
+    cdsListaDadosInversorpf: TFloatField;
+    cdsListaDadosInversorreactive_power: TFloatField;
+    cdsListaDadosInversorleakageCurrentMA: TIntegerField;
+    cdsListaDadosInversorisolimit: TIntegerField;
+    btnCarregarArquivo: TButton;
+    dlgOpenXls: TOpenDialog;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure CarregarDadosInversor(uFrameInversor,Planta:Integer);
+    procedure FormActivate(Sender: TObject);
+    procedure CarregarDadosLeitura(pDataLeitura:TDateTime;pModoOperacao:String;
+                                   vMppt,iMppt,vUav,vIac,vFac1hz,vPotencia,
+                                   vTemperatura,vProducaoDia,
+                                   vGeracaoTotal,vPF,vReactivePower:Double;
+                                   vHTotal,vRSSI,vCorrenteFuga,vISO:Integer);
+    procedure btnCarregarArquivoClick(Sender: TObject);
+    procedure CarregarArquivo(pNomeArquivo,pInversor:String);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmDadosInversor: TfrmDadosInversor;
+
+implementation
+
+uses
+  uDados, uFormularios;
+
+{$R *.dfm}
+
+procedure TfrmDadosInversor.btnCarregarArquivoClick(Sender: TObject);
+begin
+  if (dlgOpenXls.Execute) then
+    CarregarArquivo(dlgOpenXls.FileName,'Sheet1');
+end;
+
+procedure TfrmDadosInversor.CarregarArquivo(pNomeArquivo,pInversor: String);
+var
+  ExcelApp, ExcelSheetApp: OleVariant;
+  Dados: Variant;
+  LastLin, LastCol, ColQuantidade: Integer;
+  opgFile: TOpenDialog;
+const
+  xlCellTypeLastCell= $0000000B;
+  xlCellTypeVisible = $0000000C;
+  Excel = 'Excel.Application';
+begin
+  if MessageDlg('Deseja importar os produtos de uma planilha?', mtConfirmation, mbYesNo, 0, mbNo) = mrYes then
+    begin
+      try
+        opgFile := TOpenDialog.Create(Self);
+        opgFile.Filter := 'Excel|*.xls*';
+        if opgFile.Execute then
+        begin
+          ColQuantidade:=3;
+          {Obteve as informações do excel}
+          ExcelApp := CreateOleObject(Excel);
+          ExcelApp.WorkBooks.Open(opgFile.FileName);
+          ExcelApp.visible := True; {Somente para teste}
+          ExcelSheetApp := ExcelApp.WorkBooks[1].WorkSheets[1];
+          {Obtem a ultima linha}
+          ExcelSheetApp.Cells.SpecialCells(xlCellTypeLastCell, EmptyParam).Activate;
+          LastLin := ExcelApp.ActiveCell.Row;
+          LastCol := ExcelApp.ActiveCell.Column;
+          {Filtra pela coluna Quantidade}
+          ExcelSheetApp.Range['A1', ExcelApp.Cells.Item[LastLin, LastCol]].AutoFilter(Field := ColQuantidade, Criteria1 := '<>',
+            Criteria2 := '<>0');
+          {Obtem somente as linhas visibeis}
+          ExcelSheetApp.Range['A1', ExcelApp.Cells.Item[LastLin, LastCol]].SpecialCells(xlCellTypeLastCell, EmptyParam)
+            .SpecialCells(xlCellTypeVisible, EmptyParam).Activate;
+
+          Dados := ExcelSheetApp.Range['A1', ExcelApp.Cells.Item[LastLin, LastCol]].SpecialCells(xlCellTypeLastCell, EmptyParam)
+            .SpecialCells(xlCellTypeVisible, EmptyParam).value;
+           {O problema ocorre aqui, pois não retorna todos os itens filtrados}
+        end;
+      finally
+        if not VarIsEmpty(ExcelApp) then
+        begin
+          ExcelApp.Quit;
+          ExcelApp := Unassigned;
+          ExcelSheetApp := Unassigned;
+        end;
+        if Assigned(opgFile) then
+          FreeAndNil(opgFile);
+      end;
+    end;
+end;
+
+procedure TfrmDadosInversor.CarregarDadosInversor(uFrameInversor,
+  Planta: Integer);
+var
+  zqLista:TZQuery;
+begin
+  zqLista :=  TZQuery.Create(nil);
+  with zqLista do
+  begin
+    Connection  :=  Dados.conDados;
+    if Active then
+      Close;
+    SQL.Clear;
+    SQL.Add('SELECT * FROM DADOS_INVERSOR');
+    Open;
+    First;
+    FetchAll;
+    CriaDataSet(cdsListaDadosInversor);
+    while not Eof do
+    begin
+      CarregarDadosLeitura(
+        FieldByName('DATA_HORA_LEITURA').AsDateTime,
+        FieldByName('MODO_OPERACAO').AsString,
+        FieldByName('V_MPPT_1(V)').AsFloat,
+        FieldByName('I_MPPT_1(A)').AsFloat,
+        FieldByName('UAV').AsFloat,
+        FieldByName('I_AC_1(A)').AsFloat,
+        FieldByName('F_AC_1(HZ)').AsFloat,
+        FieldByName('POTENCIA').AsFloat,
+        FieldByName('TEMPERATURA').AsFloat,
+        FieldByName('PRODUCAO_DIA').AsFloat,
+        FieldByName('GERACAO_TOTAL').AsFloat,
+        FieldByName('PF').AsFloat,
+        FieldByName('REACTIVE_POWER').AsFloat,
+        FieldByName('H_TOTAL').AsInteger,
+        FieldByName('RSSI').AsInteger,
+        FieldByName('LEAKAGE_CURRENT(MA)').AsInteger,
+        FieldByName('ISO_LIMIT').AsInteger
+      );
+      Next;
+    end;
+  end;
+  FreeAndNil(zqLista);
+end;
+
+procedure TfrmDadosInversor.CarregarDadosLeitura(pDataLeitura: TDateTime;
+  pModoOperacao: String; vMppt,iMppt,vUav,vIac,vFac1hz,vPotencia,vTemperatura,
+  vProducaoDia,vGeracaoTotal,vPF,vReactivePower: Double;vHTotal,vRSSI,
+  vCorrenteFuga,vISO:Integer);
+begin
+  cdsListaDadosInversor.Append;
+  cdsListaDadosInversorDataHoraLeitura.AsDateTime :=  pDataLeitura;
+  cdsListaDadosInversorModoOperacao.AsString      :=  pModoOperacao;
+  cdsListaDadosInversorvmppt1v.AsFloat            :=  vMppt;
+  cdsListaDadosInversorimppt1a.AsFloat            :=  iMppt;
+  cdsListaDadosInversorUAV.AsFloat                :=  vUav;
+  cdsListaDadosInversoriac1a.AsFloat              :=  vIac;
+  cdsListaDadosInversorfac1hz.AsFloat             :=  vFac1hz;
+  cdsListaDadosInversorpotencia.AsFloat           :=  vPotencia;
+  cdsListaDadosInversortemperatura.AsFloat        :=  vTemperatura;
+  cdsListaDadosInversorproducao_dia.AsFloat       :=  vProducaoDia;
+  cdsListaDadosInversorgeracao_total.AsFloat      :=  vGeracaoTotal;
+  cdsListaDadosInversorh_total.AsInteger          :=  vHTotal;
+  cdsListaDadosInversorrssi.AsInteger             :=  vRSSI;
+  cdsListaDadosInversorpf.AsFloat                 :=  vPF;
+  cdsListaDadosInversorreactive_power.AsFloat     :=  vReactivePower;
+  cdsListaDadosInversorleakageCurrentMA.AsInteger :=  vCorrenteFuga;
+  cdsListaDadosInversorisolimit.AsInteger         :=  vISO;
+  cdsListaDadosInversor.Post;
+end;
+
+procedure TfrmDadosInversor.FormActivate(Sender: TObject);
+begin
+  CarregarDadosInversor(0,0);
+end;
+
+procedure TfrmDadosInversor.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  Action            :=  TCloseAction.caFree;
+  frmDadosInversor  :=  nil;
+end;
+
+end.
